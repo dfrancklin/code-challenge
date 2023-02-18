@@ -1,0 +1,74 @@
+<div class="flex flex-1 justify-center items-center">
+  <form class="w-full max-w-md" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <h1>Sign In</h1>
+
+    <div class="text-red-600" *ngIf="error$ | async as error">
+      {{ error.message }}
+    </div>
+
+    <div class="form-control mb-4">
+      <label class="label" for="email">
+        <span class="label-text">Email</span>
+      </label>
+
+      <input
+        type="email"
+        class="input input-bordered"
+        id="email"
+        formControlName="email"
+      />
+
+      <div
+        class="text-red-600"
+        *ngIf="form.get('email')?.invalid && form.get('email')?.touched"
+      >
+        <ng-container *ngIf="form.get('email')?.hasError('required')">
+          This field is required
+        </ng-container>
+
+        <ng-container *ngIf="form.get('email')?.hasError('email')">
+          This email is invalid
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="form-control mb-4">
+      <label class="label" for="password">
+        <span class="label-text">Password</span>
+      </label>
+
+      <input
+        type="password"
+        class="input input-bordered"
+        id="password"
+        formControlName="password"
+      />
+
+      <div
+        class="text-red-600"
+        *ngIf="form.get('password')?.invalid && form.get('password')?.touched"
+      >
+        <ng-container *ngIf="form.get('password')?.hasError('required')">
+          This field is required
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="form-control mb-4">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="form.invalid || (isLoading$ | async)"
+        [ngClass]="{ loading: isLoading$ | async }"
+      >
+        Submit
+      </button>
+    </div>
+
+    <div class="divider">OR</div>
+
+    <p class="text-center">
+      New around here? <a [routerLink]="['/auth/sign-up']">Sign Up</a>
+    </p>
+  </form>
+</div>

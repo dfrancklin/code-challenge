@@ -1,0 +1,17 @@
+<div class="text-red-600" *ngIf="control?.invalid && control?.touched">
+  <ng-container *ngIf="control?.hasError('required')">
+    This field is required
+  </ng-container>
+
+  <ng-container *ngIf="control?.hasError('ageLimit')">
+    You must be at least 16 year old
+  </ng-container>
+
+  <ng-container *ngIf="control?.hasError('email')">
+    This email is invalid
+  </ng-container>
+
+  <ng-container *ngIf="control?.hasError('equalsTo')">
+    The passwords doesn't match
+  </ng-container>
+</div>

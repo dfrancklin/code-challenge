@@ -1,0 +1,63 @@
+<header class="flex justify-between items-center">
+  <h1 class="mb-0">Courses</h1>
+
+  <span *ngIf="isLoading$ | async" class="btn btn-ghost loading">
+    Loading...
+  </span>
+
+  <a
+    routerLink="/courses/new"
+    class="btn btn-md btn-primary"
+    *ngIf="isAdmin$ | async"
+  >
+    New Course
+  </a>
+</header>
+
+<hr />
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+  <app-card *ngFor="let course of courses$ | async" [title]="course.name">
+    <p class="line-clamp-3">{{ course.description }}</p>
+
+    <ng-container actions>
+      <ng-container *ngIf="isAdmin$ | async">
+        <button class="btn btn-ghost btn-sm xl:btn-md">Remove</button>
+        <a
+          [routerLink]="['/courses', course.id]"
+          class="btn btn-success btn-sm xl:btn-md"
+        >
+          Edit
+        </a>
+      </ng-container>
+
+      <button class="btn btn-primary btn-sm xl:btn-md">Enroll</button>
+    </ng-container>
+  </app-card>
+</div>
+
+<hr />
+
+<div class="flex justify-end gap-2 items-center">
+  <p>
+    Page {{ ((currentPage$ | async) || 0) + 1 }} of
+    {{ totalPages$ | async }} ({{ totalElements$ | async }})
+  </p>
+
+  <div class="btn-group grid grid-cols-2">
+    <button
+      class="btn btn-outline"
+      [disabled]="isFirstPage$ | async"
+      (click)="onChangePage(-1)"
+    >
+      Previous page
+    </button>
+    <button
+      class="btn btn-outline"
+      [disabled]="isLastPage$ | async"
+      (click)="onChangePage(1)"
+    >
+      Next
+    </button>
+  </div>
+</div>

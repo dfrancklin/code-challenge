@@ -1,0 +1,205 @@
+<div class="flex flex-1 justify-center items-center">
+  <form class="w-full max-w-lg" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <h1>Sign Up</h1>
+
+    <div class="text-red-600" *ngIf="error$ | async as error">
+      {{ error.message }}
+    </div>
+
+    <app-card class="block mb-8" title="Personal Info">
+      <div class="flex gap-4">
+        <div class="form-control w-full mb-4">
+          <label class="label" for="firstName">
+            <span class="label-text">First Name</span>
+          </label>
+
+          <input
+            type="text"
+            class="input input-bordered w-full"
+            id="firstName"
+            formControlName="firstName"
+          />
+
+          <app-form-errors [control]="form.get('firstName')"></app-form-errors>
+        </div>
+
+        <div class="form-control w-full mb-4">
+          <label class="label" for="lastName">
+            <span class="label-text">Last Name</span>
+          </label>
+
+          <input
+            type="text"
+            class="input input-bordered w-full"
+            id="lastName"
+            formControlName="lastName"
+          />
+
+          <app-form-errors [control]="form.get('lastName')"></app-form-errors>
+        </div>
+      </div>
+
+      <div class="form-control w-full mb-4">
+        <label class="label" for="birthDate">
+          <span class="label-text">Date of Birth</span>
+        </label>
+
+        <input
+          type="date"
+          class="input input-bordered w-full"
+          id="birthDate"
+          formControlName="birthDate"
+        />
+
+        <app-form-errors [control]="form.get('birthDate')"></app-form-errors>
+      </div>
+
+      <div class="form-control mb-4">
+        <label class="label" for="phoneNumber">
+          <span class="label-text">Phone Number</span>
+        </label>
+
+        <input
+          type="text"
+          class="input input-bordered w-full"
+          id="phoneNumber"
+          formControlName="phoneNumber"
+        />
+
+        <app-form-errors [control]="form.get('phoneNumber')"></app-form-errors>
+      </div>
+    </app-card>
+
+    <app-card class="block mb-8" title="Address">
+      <div class="flex gap-4">
+        <div class="form-control w-full mb-4">
+          <label class="label" for="address">
+            <span class="label-text">Address</span>
+          </label>
+
+          <input
+            type="text"
+            class="input input-bordered w-full"
+            id="address"
+            formControlName="address"
+          />
+
+          <app-form-errors [control]="form.get('address')"></app-form-errors>
+        </div>
+
+        <div class="form-control w-full mb-4">
+          <label class="label" for="city">
+            <span class="label-text">City</span>
+          </label>
+
+          <input
+            type="text"
+            class="input input-bordered w-full"
+            id="city"
+            formControlName="city"
+          />
+
+          <app-form-errors [control]="form.get('city')"></app-form-errors>
+        </div>
+      </div>
+
+      <div class="flex gap-4">
+        <div class="form-control w-full mb-4">
+          <label class="label" for="state">
+            <span class="label-text">State</span>
+          </label>
+
+          <input
+            type="text"
+            class="input input-bordered w-full"
+            id="state"
+            formControlName="state"
+          />
+
+          <app-form-errors [control]="form.get('state')"></app-form-errors>
+        </div>
+
+        <div class="form-control w-full mb-4">
+          <label class="label" for="zipCode">
+            <span class="label-text">Zip Code</span>
+          </label>
+
+          <input
+            type="text"
+            class="input input-bordered w-full"
+            id="zipCode"
+            formControlName="zipCode"
+          />
+
+          <app-form-errors [control]="form.get('zipCode')"></app-form-errors>
+        </div>
+      </div>
+    </app-card>
+
+    <app-card class="block mb-8" title="Access">
+      <div class="form-control mb-4">
+        <label class="label" for="email">
+          <span class="label-text">Email</span>
+        </label>
+
+        <input
+          type="email"
+          class="input input-bordered"
+          id="email"
+          formControlName="email"
+        />
+
+        <app-form-errors [control]="form.get('email')"></app-form-errors>
+      </div>
+
+      <div class="form-control mb-4">
+        <label class="label" for="password">
+          <span class="label-text">Password</span>
+        </label>
+
+        <input
+          type="password"
+          class="input input-bordered"
+          id="password"
+          formControlName="password"
+        />
+
+        <app-form-errors [control]="form.get('password')"></app-form-errors>
+      </div>
+
+      <div class="form-control mb-4">
+        <label class="label" for="passwordConfirmation">
+          <span class="label-text">Password Confirmation</span>
+        </label>
+
+        <input
+          type="password"
+          class="input input-bordered"
+          id="passwordConfirmation"
+          formControlName="passwordConfirmation"
+        />
+
+        <app-form-errors
+          [control]="form.get('passwordConfirmation')"
+        ></app-form-errors>
+      </div>
+    </app-card>
+
+    <div class="form-control mb-4">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="form.invalid || (isLoading$ | async)"
+        [ngClass]="{ loading: isLoading$ | async }"
+      >
+        Submit
+      </button>
+    </div>
+
+    <div class="divider">OR</div>
+
+    <p class="text-center">
+      Already a member? <a [routerLink]="['/auth/sign-in']">Sign In</a>
+    </p>
+  </form>
+</div>

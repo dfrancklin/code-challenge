@@ -1,0 +1,11 @@
+<div class="card bg-neutral text-neutral-content shadow">
+  <div class="card-body">
+    <h2 class="card-title my-0">{{ title }}</h2>
+
+    <ng-content></ng-content>
+
+    <div class="card-actions justify-end">
+      <ng-content select="[actions]"></ng-content>
+    </div>
+  </div>
+</div>
