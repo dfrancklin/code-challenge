@@ -1,0 +1,216 @@
+@base_path=http://localhost:8080/api
+@admin_access_token=eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6ImRmcmFuY2tsaW4yM0BnbWFpbC5jb20iLCJpc3MiOiJsZWFybmluZy1tYW5hZ2VtZW50LXN5c3RlbSIsImlhdCI6MTY3NjczOTcwOCwiZXhwIjoxNjc2NzgyOTA4fQ.81CLaZmvHGeuZJzXz0exy9rbdjIKJXigLRCVM7MVTXrHI840_AGFK6AoPx4vY92h36YlVJIe-yxogn2u6WyG3A
+@student1_access_token=eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiUk9MRV9TVFVERU5UIiwic3ViIjoidGVzdC51c2VyQGVtYWlsLmNvbSIsImlzcyI6ImxlYXJuaW5nLW1hbmFnZW1lbnQtc3lzdGVtIiwiaWF0IjoxNjc2NjIzNzYxLCJleHAiOjE2NzY2NjY5NjF9.zVL-yerFF6olaWxxkhI9vOgT8Ea1Q_qDeeM3EHbDSplE9_AbacfoYZO5Q4z9oXNsZRkzg7PvP2LNcwNg5wiMrA
+@student2_access_token=eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiUk9MRV9TVFVERU5UIiwic3ViIjoiZGZyYW5ja2xpbkBob3RtYWlsLmNvbSIsImlzcyI6ImxlYXJuaW5nLW1hbmFnZW1lbnQtc3lzdGVtIiwiaWF0IjoxNjc2NjI0NjcyLCJleHAiOjE2NzY2Njc4NzJ9.EuzgqOyOlwClxbeoBIx1xywUy0bz8ILI7zlGpXkMuYzZJttJFU2yPJLuqDQvi7Dl9UBeh1cVmDW4VA1SYo2N3w
+
+
+
+  ##########
+ ## AUTH ##
+##########
+
+
+### SIGN IN ADMIN
+POST {{base_path}}/auth/sign-in
+Content-Type: application/json
+
+{
+    "email" : "dfrancklin23@gmail.com",
+    "password" : "123456"
+}
+
+
+### SIGN UP STUDENT 2
+POST {{base_path}}/auth/sign-up
+Content-Type: application/json
+
+{
+    "firstName" : "Diego",
+    "lastName" : "Santos",
+    "birthDate" : "1993-07-12",
+    "address" : "Rua João Wagner Wey, 1565, BLC 10 APTO 302",
+    "city" : "Sorocaba",
+    "state" : "SP",
+    "zipCode" : "18056-695",
+    "email" : "dfrancklin@hotmail.com",
+    "phoneNumber" : "+55 (15) 99145-6918",
+    "password" : "123456789"
+}
+
+
+### SIGN IN STUDENT 1
+POST {{base_path}}/auth/sign-in
+Content-Type: application/json
+
+{
+    "email" : "test.user@email.com",
+    "password" : "123456"
+}
+
+
+### SIGN IN STUDENT 2
+POST {{base_path}}/auth/sign-in
+Content-Type: application/json
+
+{
+    "email" : "dfrancklin@hotmail.com",
+    "password" : "123456789"
+}
+
+
+
+  #############
+ ## COURSES ##
+#############
+
+
+### GET ALL ENABLED (ALL)
+GET {{base_path}}/courses
+Authorization: Bearer {{student1_access_token}}
+
+
+### GET BY ID (ALL)
+GET {{base_path}}/courses/16
+Authorization: Bearer {{student1_access_token}}
+
+
+### GET ALL (ADMINS ONLY)
+GET {{base_path}}/courses?page=3
+Authorization: Bearer {{admin_access_token}}
+
+
+### GET BY ID (ADMINS ONLY)
+GET {{base_path}}/courses/16
+Authorization: Bearer {{admin_access_token}}
+
+
+### CREATE (ADMINS ONLY)
+POST {{base_path}}/courses
+Content-Type: application/json
+Authorization: Bearer {{admin_access_token}}
+
+{
+  "name": "COURSE TEST {{$localDatetime iso8601}}"
+}
+
+
+### UPDATE (ADMINS ONLY)
+PUT {{base_path}}/courses/16
+Content-Type: application/json
+Authorization: Bearer {{admin_access_token}}
+
+{
+  "name": "COURSE TEST {{$localDatetime iso8601}}",
+  "enabled": true
+}
+
+
+### DELETE (ADMINS ONLY)
+DELETE {{base_path}}/courses/16
+Authorization: Bearer {{admin_access_token}}
+
+
+
+  #################
+ ## ENROLLMENTS ##
+#################
+
+
+### GET OWN ENROLLMENTS
+GET {{base_path}}/enrollments
+Authorization: Bearer {{student1_access_token}}
+
+
+### GET OWN ENROLLMENTS BY ID
+GET {{base_path}}/enrollments/1
+Authorization: Bearer {{student1_access_token}}
+
+
+### GET OWN ENROLLMENTS BY ID
+GET {{base_path}}/enrollments/1
+Authorization: Bearer {{student2_access_token}}
+
+
+### CREATE OWN ENROLLMENT
+POST {{base_path}}/enrollments
+Content-Type: application/json
+Authorization: Bearer {{student1_access_token}}
+
+{
+  "courseId": 5
+}
+
+
+### UPDATE OWN ENROLLMENT
+PUT {{base_path}}/enrollments/9
+Content-Type: application/json
+Authorization: Bearer {{student1_access_token}}
+
+{
+  "status": "COMPLETED"
+}
+
+
+
+  ################
+ ## CATEGORIES ##
+################
+
+
+### GET ALL
+GET {{base_path}}/categories
+Content-Type: application/json
+Authorization: Bearer {{student1_access_token}}
+
+
+
+  ##############
+ ## TIME LOG ##
+##############
+
+
+### GET OWN TIME LOGS
+GET {{base_path}}/enrollments/1/timelogs
+Authorization: Bearer {{student1_access_token}}
+
+
+### GET OWN TIME LOGS BY ID
+GET {{base_path}}/timelogs/2
+Authorization: Bearer {{student1_access_token}}
+
+
+### GET OWN TIME LOGS BY ID
+GET {{base_path}}/timelogs/2
+Authorization: Bearer {{student2_access_token}}
+
+
+### CREATE OWN TIME LOG
+POST {{base_path}}/timelogs
+Content-Type: application/json
+Authorization: Bearer {{student1_access_token}}
+
+{
+  "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, rem rerum itaque optio explicabo aperiam delectus mollitia quasi quos quis possimus culpa debitis nostrum laboriosam necessitatibus illo nesciunt ducimus voluptas.",
+  "startedAt": "2023-02-17T11:30:01",
+  "completedAt": "2023-02-17T12:00:01",
+  "enrollmentId": 1,
+  "categoryId": 1
+}
+
+
+### UPDATE OWN TIME LOG
+PUT {{base_path}}/timelogs/2
+Content-Type: application/json
+Authorization: Bearer {{student1_access_token}}
+
+{
+  "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, rem rerum itaque optio explicabo aperiam delectus mollitia quasi quos quis possimus culpa debitis nostrum laboriosam necessitatibus illo nesciunt ducimus voluptas.",
+  "startedAt": "2023-02-17T11:00:00",
+  "completedAt": "2023-02-17T11:30:00",
+  "categoryId": 3
+}
+
+
+### DELETE OWN TIME LOG
+DELETE {{base_path}}/timelogs/1
+Authorization: Bearer {{admin_access_token}}
